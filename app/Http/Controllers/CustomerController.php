@@ -6,6 +6,7 @@ use App\Models\Customer;
 use App\Models\Phone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Group;
 
 class CustomerController extends Controller
 {
@@ -15,25 +16,10 @@ class CustomerController extends Controller
      */
     public function index()
     {
-       $customers = Customer::with('phone','address')->get();
-        return view('customers', compact('customers'));
+       $customers = Customer::with('phone','address','group')->get();
+       //return view('customers', compact('customers'));
 
-    // $customers=Customer::get();
-    //    $phone=Phone::get();
-    //    $address=Address::get();
-
-
-    // $address = DB::table('customers')
-    // ->join('addresses', 'customers.id', '=', 'addresses.customer_id')
-    // ->select('addresses.address')
-    // ->get();
-
-
-//dd($data);
-
-
-      return view('customers',compact('customers','address' ,'phone'));
-
+       return Response()->json($customers);
     }
 
     /**
@@ -59,9 +45,20 @@ class CustomerController extends Controller
         $customers->type =$request->type;
         $customers->birthday =$request->birthday;
         $customers->notes =$request->notes;
+
         $customers->save();
 
-        return redirect('customers');
+       // return redirect('customers');
+
+
+       return Response()->json($customers);
+
+
+
+
+
+
+
 
 
         // $data=$request->validate([
@@ -86,8 +83,29 @@ class CustomerController extends Controller
     public function show($id)
     {
 
-        $customer = Customer::findOrFail($id);
-       return view('showCustomer',compact('customer'));
+
+
+
+
+
+        $customer = Customer::with('phone','address','group')->findOrFail($id);
+
+
+        return Response()->json($customer);
+
+
+
+
+
+
+
+        // $customer = Customer::findOrFail($id);
+
+        // $customer = Customer::with('phone','address','group')->get();
+
+
+
+      // return view('showCustomer',compact('customer'));
     }
 
     /**
@@ -115,7 +133,23 @@ class CustomerController extends Controller
         $customer = Customer::findOrFail($id);
         $customer->update($request->all());
 
-        return redirect('customers');
+
+        return Response()->json($customer);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       // return redirect('customers');
 
 
         //      $data=$request->validate([
@@ -137,6 +171,88 @@ class CustomerController extends Controller
     public function destroy($id)
     {
         Customer::where ('id',$id) ->delete();
-        return redirect('customers');
+
+        return response()->json(['message' => 'Customer Deleted successfully'], 201);
+
+
+
+
+
+
+
+
+       // return redirect('customers');
     }
+
+
+
+
+
+
+
+
+
+    public function storePhone(Request $request, $customerId)
+    {
+
+        $customer = Customer::findOrFail($customerId);
+
+        $phone = new Phone();
+        $phone->customer_id = $customerId;
+        $phone->phone = $request->phone;
+        $phone->save();
+
+
+
+       return response()->json(['message' => 'Phone number stored successfully'], 201);
+
+    }
+
+
+
+    public function storeAddress(Request $request, $customerId)
+    {
+
+        $customer = Customer::findOrFail($customerId);
+
+        $address = new Address();
+        $address->customer_id = $customerId;
+        $address->address = $request->address;
+        $address->save();
+
+
+
+      //return Response()->json($phone)->with('success', 'Phone number added successfully.');
+      return response()->json(['message' => 'address   stored successfully'], 201);
+
+    }
+
+
+
+    public function storeGroup(Request $request, $customerId)
+    {
+
+        $customer = Customer::findOrFail($customerId);
+
+        $group = new Group();
+        $group->customer_id = $customerId;
+        $group->groups = $request->groups;
+        $group->save();
+
+
+
+       return response()->json(['message' => '  group stored successfully'], 201);
+
+    }
+
+
+
+
+
+
+
+
+
+
+
 }

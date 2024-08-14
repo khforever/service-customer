@@ -8,7 +8,7 @@
         <li class="active"><a href="{{route('customers')}}">Customers</a></li>
         <li><a href="{{route('addCustomer')}}"> add Customer</a></li>
 
-        {{-- <li><a href="#">Page 3</a></li> --}}
+        
 
 
 

@@ -13,10 +13,28 @@ return [
     |
     */
 
+
+
+    //kh
+
+
+    // 'defaults' => [
+    //     'guard' => env('AUTH_GUARD', 'web'),
+    //     'passwords' => env('AUTH_PASSWORD_BROKER', 'users'),
+    // ],
+
+
+
+
+
     'defaults' => [
-        'guard' => env('AUTH_GUARD', 'web'),
-        'passwords' => env('AUTH_PASSWORD_BROKER', 'users'),
+        'guard' => 'api',
+        'passwords' => 'users',
     ],
+
+
+
+
 
     /*
     |--------------------------------------------------------------------------
@@ -42,6 +60,14 @@ return [
         ],
     ],
 
+
+    'guards' => [
+        'api' => [
+            'driver' => 'jwt',
+            'provider' => 'users',
+            'hash' => false,
+        ],
+],
     /*
     |--------------------------------------------------------------------------
     | User Providers
@@ -98,6 +124,32 @@ return [
             'throttle' => 60,
         ],
     ],
+
+
+
+///kh  jtwt
+
+
+'providers' => [
+
+    Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+],
+'aliases' => [
+
+    'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
+    'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
+
+],
+
+
+
+
+
+
+
+
+
+
 
     /*
     |--------------------------------------------------------------------------

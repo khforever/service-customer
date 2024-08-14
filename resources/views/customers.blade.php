@@ -33,6 +33,17 @@
     <tbody>
         {{-- {{$address}} --}}
 
+{{--
+   @foreach ($addresses as $address)
+
+   <td>{{$address->address}} </td>
+
+
+   @endforeach --}}
+
+
+
+
 
         @foreach ($customers as $customer)
 
@@ -40,15 +51,17 @@
 
       <tr style="background-color: lightgray;">
         <td>{{$customer->fullName}}</td>
+   {{-- <td>{{$customer->address->address}} </td> --}}
+        <td>
 
-
-
-
-
-
-       <td>{{$customer->address}} </td>
-
-        <td>{{$customer->phone}} </td>
+            @foreach ($customer->address as $address )
+            {{$address->address }}
+@endforeach
+        </td>
+        <td> @foreach ($customer->phone as $phone)
+            {{$phone->phone}}
+         @endforeach
+         </td>
         <td>{{$customer->account_type}}</td>
         <td>{{$customer->type}} </td>
         <td>{{$customer->birthday}}</td>
