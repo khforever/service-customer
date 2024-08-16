@@ -7,6 +7,7 @@ use App\Models\Phone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Group;
+use App\Http\Requests\StoreCustomerRequest;
 
 class CustomerController extends Controller
 {
@@ -17,9 +18,9 @@ class CustomerController extends Controller
     public function index()
     {
        $customers = Customer::with('phone','address','group')->get();
-       //return view('customers', compact('customers'));
 
        return Response()->json($customers);
+     //return view('customers', compact('customers'));
     }
 
     /**
@@ -35,45 +36,14 @@ class CustomerController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreCustomerRequest $request)
     {
+       Customer::create($request->validated());
 
+       return response()->json(['message' => '  customer stored successfully'], 201);
 
-        $customers=new Customer();
-        $customers->fullName =$request->fullName;
-        $customers->account_type=$request->account_type;
-        $customers->type =$request->type;
-        $customers->birthday =$request->birthday;
-        $customers->notes =$request->notes;
-
-        $customers->save();
 
        // return redirect('customers');
-
-
-       return Response()->json($customers);
-
-
-
-
-
-
-
-
-
-        // $data=$request->validate([
-        //     'fullName'=>'required|string|max:50',
-        //     'account_type'=>'required|string',
-        //     'type'=>'required|string',
-        //     'birthday'=>'required|date',
-        //     'notes'=>'required|string',
-
-
-        //    ]);
-
-        //   Customer::create ($data);
-
-        //    return redirect('customers');
 
     }
 
@@ -83,28 +53,12 @@ class CustomerController extends Controller
     public function show($id)
     {
 
-
-
-
-
-
         $customer = Customer::with('phone','address','group')->findOrFail($id);
 
 
         return Response()->json($customer);
 
-
-
-
-
-
-
-        // $customer = Customer::findOrFail($id);
-
-        // $customer = Customer::with('phone','address','group')->get();
-
-
-
+  
       // return view('showCustomer',compact('customer'));
     }
 
@@ -136,32 +90,7 @@ class CustomerController extends Controller
 
         return Response()->json($customer);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-       // return redirect('customers');
-
-
-        //      $data=$request->validate([
-        //     'fullName'=>'required|string|max:50',
-        //     'account_type'=>'required|string',
-        //     'type'=>'required|string',
-        //     'birthday'=>'required|date',
-        //     'notes'=>'required|string',
-        //    ]);
-
-        //    Customer::where ('id',$id)->update($data);
-     // return 'updated';
+ 
       //return redirect('customers');
     }
 
@@ -173,10 +102,6 @@ class CustomerController extends Controller
         Customer::where ('id',$id) ->delete();
 
         return response()->json(['message' => 'Customer Deleted successfully'], 201);
-
-
-
-
 
 
 
@@ -220,9 +145,7 @@ class CustomerController extends Controller
         $address->address = $request->address;
         $address->save();
 
-
-
-      //return Response()->json($phone)->with('success', 'Phone number added successfully.');
+ 
       return response()->json(['message' => 'address   stored successfully'], 201);
 
     }

@@ -29,7 +29,7 @@ Route::get('/user-profile', [AuthController::class, 'userProfile']);
 
 
 
-
+ 
 
 
 
@@ -67,28 +67,5 @@ Route::get('customer/{customerId}/group', [CustomerController::class, 'storeGrou
 
 
 
-
-
-
-// Route::get('addCustomer',[CustomerController::class,'create'])->name('addCustomer');
-
-
-
-// Route::get('storeCustomer',[CustomerController::class,'store'])->name('storeCustomer') ;
-
-
-
-// Route::get('showCustomer/{id}',[CustomerController::class,'show']);
-
-
-
-// Route::get('updateCustomer/{id}',[CustomerController::class,'edit']);
-
-// Route::put('update/{id}',[CustomerController::class,'update']);
-
-
-
-// Route::get('deleteCustomer/{id}',[CustomerController::class,'destroy']);
-
-
+ 
 

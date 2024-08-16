@@ -31,32 +31,15 @@
       </tr>
     </thead>
     <tbody>
-        {{-- {{$address}} --}}
-
-{{--
-   @foreach ($addresses as $address)
-
-   <td>{{$address->address}} </td>
-
-
-   @endforeach --}}
-
-
-
-
-
         @foreach ($customers as $customer)
-
-
 
       <tr style="background-color: lightgray;">
         <td>{{$customer->fullName}}</td>
-   {{-- <td>{{$customer->address->address}} </td> --}}
-        <td>
+         <td>
 
             @foreach ($customer->address as $address )
             {{$address->address }}
-@endforeach
+           @endforeach
         </td>
         <td> @foreach ($customer->phone as $phone)
             {{$phone->phone}}
@@ -89,6 +72,5 @@
 </body>
 
 
-<!--  onclick="return confirm('Are you sure you want to delete?')" -->
-</html>
+ </html>
 
